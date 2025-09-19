@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outil d'Évaluation des Apprentis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <img src="{{ url_for('static', filename='images/logo_uimm_placeholder.jpg') }}" alt="Logo UIMM" class="logo">
+            <a href="{{ url_for('index') }}"><h1>Suivi des Évaluations - BTS ATI</h1></a>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; S. Jaubert 2025 - Application construite pour le suivi des missions industrielles.</p>
+    </footer>
+</body>
+</html>

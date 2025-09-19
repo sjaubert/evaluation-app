@@ -1,0 +1,5 @@
+# Ignorer le dossier de la base de données
+instance/
+
+# Ignorer les fichiers cache de Python
+__pycache__/

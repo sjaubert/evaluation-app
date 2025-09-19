@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <section class="card">
+        <h2>Ajouter un nouvel étudiant</h2>
+        <form action="{{ url_for('index') }}" method="POST" class="student-form">
+            <input type="text" name="firstname" placeholder="Prénom" required>
+            <input type="text" name="lastname" placeholder="Nom" required>
+            <button type="submit">Ajouter l'étudiant</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>Liste des étudiants</h2>
+        {% if students %}
+        <ul class="student-list">
+            {% for student in students %}
+            <li>
+                <a href="{{ url_for('student_detail', student_id=student.id) }}">
+                    {{ student.lastname.upper() }} {{ student.firstname }}
+                </a>
+                <form action="{{ url_for('delete_student', student_id=student.id) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet étudiant et tout son historique ?');">
+                    <button type="submit" class="delete-btn">Supprimer</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>Aucun étudiant dans la base de données. Commencez par en ajouter un !</p>
+        {% endif %}
+    </section>
+{% endblock %}

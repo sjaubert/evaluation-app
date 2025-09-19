@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <a href="{{ url_for('index') }}" class="back-link">&larr; Retour à la liste</a>
+    
+    <div class="card student-header">
+        <h2>{{ student.firstname }} {{ student.lastname.upper() }}</h2>
+        <a href="{{ url_for('add_evaluation', student_id=student.id) }}" class="btn-primary">
+            + Nouvelle Évaluation
+        </a>
+    </div>
+
+    <div class="card">
+        <h3>Historique des évaluations</h3>
+        {% if evaluations %}
+            {% for eval in evaluations %}
+            <div class="evaluation-record">
+                <div class="evaluation-header">
+                    <h4>Évaluation du {{ eval.evaluation_date.strftime('%d/%m/%Y à %H:%M') }}</h4>
+                    <form action="{{ url_for('delete_evaluation', evaluation_id=eval.id) }}" method="POST" onsubmit="return confirm('Confirmer la suppression de cette évaluation ?');">
+                        <button class="delete-btn-small">Supprimer</button>
+                    </form>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Critère</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Regard, Voix, Gestuelle, Posture</td>
+                            <td><strong>{{ eval.non_verbal }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Clarté et articulation</td>
+                            <td><strong>{{ eval.clarity_articulation }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Enchaînement logique</td>
+                            <td><strong>{{ eval.logical_flow }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Qualité du diaporama</td>
+                            <td><strong>{{ eval.slides_quality }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Respect du cahier des charges (Temps, Nb diapos)</td>
+                            <td><strong>{{ eval.spec_respect }}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                {% if eval.improvement_axes %}
+                <h5>Axes d'amélioration potentiels :</h5>
+                <p class="comments">{{ eval.improvement_axes }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        {% else %}
+        <p>Cet étudiant n'a pas encore été évalué.</p>
+        {% endif %}
+    </div>
+{% endblock %}

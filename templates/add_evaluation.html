@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <a href="{{ url_for('student_detail', student_id=student.id) }}" class="back-link">&larr; Annuler et retourner au profil</a>
+    
+    <div class="card">
+        <h2>Nouvelle évaluation pour {{ student.firstname }} {{ student.lastname }}</h2>
+        <form action="{{ url_for('add_evaluation', student_id=student.id) }}" method="POST" class="evaluation-form">
+            
+            {% set criteria = [
+                ('non_verbal', 'Regard, Voix, Gestuelle, Posture'),
+                ('clarity_articulation', 'Le contenu était-il clair et bien articulé ?'),
+                ('logical_flow', 'Les points de l\'argumentation s\'enchaînaient-ils de façon logique ?'),
+                ('slides_quality', 'Qualité du diaporama'),
+                ('spec_respect', 'Respect du cahier des charges (Temps, Nb de diapos)')
+            ] %}
+            
+            {% for name, label in criteria %}
+            <fieldset>
+                <legend>{{ label }}</legend>
+                <div class="radio-group">
+                    <label><input type="radio" name="{{ name }}" value="--" required> --</label>
+                    <label><input type="radio" name="{{ name }}" value="-"> -</label>
+                    <label><input type="radio" name="{{ name }}" value="/"> /</label>
+                    <label><input type="radio" name="{{ name }}" value="+"> +</label>
+                    <label><input type="radio" name="{{ name }}" value="++"> ++</label>
+                </div>
+            </fieldset>
+            {% endfor %}
+            
+            <fieldset>
+                <legend>Axes d'amélioration potentiels / Commentaires</legend>
+                <textarea name="improvement_axes" rows="4" placeholder="Saisissez vos commentaires ici..."></textarea>
+            </fieldset>
+
+            <button type="submit" class="btn-primary">Enregistrer l'évaluation</button>
+        </form>
+    </div>
+{% endblock %}
