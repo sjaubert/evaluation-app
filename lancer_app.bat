@@ -6,6 +6,7 @@ echo ==========================================================
 echo    Lancement de l'application d'evaluation d'apprentis
 echo ==========================================================
 echo.
+REM Pour installer le serveur : pip install Flask Flask-SQLAlchemy
 
 REM La commande ci-dessous garantit que le script s'execute
 REM depuis le dossier ou il est place, peu importe d'ou vous le lancez.
